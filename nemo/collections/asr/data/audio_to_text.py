@@ -327,6 +327,7 @@ class AudioToCharWithDursF0Dataset(AudioToCharDataset):
         add_blank_at="last_but_one",
         pad_with_space=False,
         improved_version_g2p=False,
+        language="fra",
         phoneme_dict_path=None,
     ):
         """Constructs vocabulary from given parameters.
@@ -357,6 +358,7 @@ class AudioToCharWithDursF0Dataset(AudioToCharDataset):
                 add_blank_at=add_blank_at,
                 pad_with_space=pad_with_space,
                 improved_version_g2p=improved_version_g2p,
+                language=language,
                 phoneme_dict_path=phoneme_dict_path,
             )
         else:

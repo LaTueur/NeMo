@@ -22,6 +22,8 @@ from typing import List
 
 import nltk
 
+from g2p import make_g2p
+
 from nemo.collections.common.parts.preprocessing import parsers
 
 try:
@@ -283,6 +285,7 @@ class Phonemes(Base):
         add_blank_at="last_but_one",
         pad_with_space=False,
         improved_version_g2p=False,
+        language="fra",
         phoneme_dict_path=None,
     ):
         labels = []
@@ -313,11 +316,13 @@ class Phonemes(Base):
         self.stresses = stresses
         self.spaces = spaces
         self.pad_with_space = pad_with_space
-
-        if improved_version_g2p:
-            self.g2p = G2p(phoneme_dict_path)
+        if language == "eng":
+            if improved_version_g2p:
+                self.g2p = G2p(phoneme_dict_path)
+            else:
+                self.g2p = _g2p
         else:
-            self.g2p = _g2p
+            self.g2p = make_g2p(language, 'eng-arpabet')
 
     def encode(self, text):
         """See base class."""
