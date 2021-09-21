@@ -176,7 +176,7 @@ class G2pMultilang:
         self.transducer = make_g2p(language, 'eng-arpabet')
 
     def __call__(self, text):
-        return [" " if x == "space" else x for x in self.transducer(text).output_string.strip().replace("  ", " space ").split(" ")]
+        return [" " if x == "space" else x for x in re.sub("\s\s+", " space ", re.sub("([^ A-Z])", "  \1  ", self.transducer(text).output_string).strip()).split(" ")]
 
 class Base(abc.ABC):
     """Vocabulary for turning str text to list of int tokens."""
