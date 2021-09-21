@@ -168,6 +168,15 @@ class G2p:
 
         return prons
 
+class G2pMultilang:
+    def __init__(
+        self,
+        language = "fra"
+    ):
+        self.transducer = make_g2p(language, 'eng-arpabet')
+
+    def __call__(self, text):
+        return [" " if x == "space" else x for x in self.transducer(text).output_string.strip().replace("  ", " space ").split(" ")]
 
 class Base(abc.ABC):
     """Vocabulary for turning str text to list of int tokens."""
@@ -322,7 +331,7 @@ class Phonemes(Base):
             else:
                 self.g2p = _g2p
         else:
-            self.g2p = make_g2p(language, 'eng-arpabet')
+            self.g2p = G2pMultilang(language)
 
     def encode(self, text):
         """See base class."""
